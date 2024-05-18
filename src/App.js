@@ -3,12 +3,13 @@ import QuizPage from './QuizPage';
 import HomePage from './HomePage';
 import NavLink from './NavLink';
 import ScoreboardPage from './ScoreboardPage';
-import { QuizProvider } from './context';
 import QuestionsLayout from './QuestionsLayout';
+import { Provider } from 'react-redux';
+import store from './storage';
 
 function App() {
   return (
-    <QuizProvider>
+    <Provider store={store}>
       <BrowserRouter>
         <NavLink pathname='/'>Home</NavLink>
         <NavLink pathname='/questions/quiz'>Quiz</NavLink>
@@ -27,7 +28,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </QuizProvider>
+    </Provider>
   );
 }
 

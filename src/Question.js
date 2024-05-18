@@ -1,9 +1,11 @@
-import { useContext, useRef } from 'react'
+import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { quizContext } from './context'
+import { useDispatch } from 'react-redux'
+import { ADD_ANSWER } from './reducers/questionReducer'
+import { questionSlice } from './reducers/questionReducer'
 
 export default function Question () {
-  const context = useContext(quizContext)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const answer = useRef()
   const base = Math.floor(Math.random() * 10)
@@ -13,11 +15,16 @@ export default function Question () {
   }
   function handleSubmit (event) {
     event.preventDefault()
-    console.log('answer', answer)
     const answerNumber = Number(answer.current)
     const correct = total - base === answerNumber
-    console.log('correct', correct)
-    context.addAnswer(base, answer, total, correct)
+    const payload = {
+      base,
+      answer: answerNumber,
+      total,
+      correct
+    }
+    const action = questionSlice.actions.addAnswer(payload)
+    dispatch(action)
     navigate('/questions/scoreboard')
   }
   return (

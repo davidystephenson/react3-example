@@ -1,12 +1,12 @@
 import { useContext } from "react"
-import { quizContext } from "./context"
+import { useSelector } from 'react-redux'
 
 export default function Result (props) {
-  const context = useContext(quizContext)
+  const answers = useSelector(state => state.question.answers)
   const correctView = props.answer.correct ? 'Correct' : 'Incorrect'
   return (
     <h3>
-      {props.number}/{context.answers.length}
+      {props.number}/{answers.length}
       ({correctView})
     </h3>
   )
